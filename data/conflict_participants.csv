@@ -1,0 +1,10 @@
+conflict_id,country_id,role
+3,2,Occupying Power
+3,3,Occupied Population
+4,1,Invading Force
+4,4,Occupied State
+5,4,Belligerent
+5,5,Belligerent
+6,6,Houthi Forces
+7,7,Invading Force
+7,8,Defending State

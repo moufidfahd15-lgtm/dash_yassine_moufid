@@ -1,0 +1,8 @@
+id,name,start_year,end_year,status,conflict_type,region
+1,World War I,1914,1918,Ended,World War,Global
+2,World War II,1939,1945,Ended,World War,Global
+3,Israeli-Palestinian Conflict,1948,,Active,Territorial,Middle East
+4,Iraq War (US Invasion),2003,2011,Ended,International,Middle East
+5,Iran-Iraq War,1980,1988,Ended,International,Middle East
+6,Yemeni Civil War (Houthi Conflict),2014,,Active,Civil War,Middle East
+7,Russia-Ukraine War,2014,,Active,International,Europe
