@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TP CSS3 — Corrigé Complet</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="badge">Corrigé Complet</div>
+  <h1>TP CSS3</h1>
+  <p>Chapitre 4 — Travaux Pratiques · Module Technologies Web · ENSET Mohammedia</p>
+</header>
+
+<!-- TABLE OF CONTENTS -->
+<nav class="toc">
+  <ul>
+    <li><a href="#ex1">① Sélecteurs</a></li>
+    <li><a href="#ex2">② Box Model</a></li>
+    <li><a href="#ex3">③ Flexbox</a></li>
+    <li><a href="#ex4">④ CSS Grid</a></li>
+    <li><a href="#ex5">⑤ Responsive</a></li>
+    <li><a href="#ex6">⑥ Variables CSS</a></li>
+    <li><a href="#ex7">⑦ Animations</a></li>
+    <li><a href="#ex8">⑧ Quiz</a></li>
+  </ul>
+</nav>
+
+<main class="container">
+
+  <!-- ===================== EXERCICE 1 ===================== -->
+  <section id="ex1" class="exercise ex-1">
+    <div class="exercise-header">
+      <div class="ex-number">01</div>
+      <h2>Sélecteurs et Spécificité</h2>
+      <span class="duration">⏱ 20 min</span>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">1.1 Sélecteurs CSS</div>
+
+      <div class="question">
+        <div class="question-label">Question 1</div>
+        <p>Sélectionnez tous les liens dans la navigation</p>
+        <div class="answer">
+          <div class="answer-label">✦ Réponse</div>
+          <pre data-lang="CSS"><code><span class="sel">.main-nav ul a</span> <span class="kw">{</span>
+  <span class="cmt">/* Tous les liens &lt;a&gt; dans la nav */</span>
+<span class="kw">}</span></code></pre>
+          <p>On sélectionne les <code>&lt;a&gt;</code> descendants des <code>&lt;ul&gt;</code> dans <code>.main-nav</code>.</p>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-label">Question 2</div>
+        <p>Sélectionnez uniquement le lien actif</p>
+        <div class="answer">
+          <div class="answer-label">✦ Réponse</div>
+          <pre data-lang="CSS"><code><span class="sel">.main-nav a.active</span> <span class="kw">{</span>
+  <span class="cmt">/* Le &lt;a&gt; avec la classe "active" */</span>
+<span class="kw">}</span></code></pre>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-label">Question 3</div>
+        <p>Sélectionnez l'article qui a la classe <code>featured</code></p>
+        <div class="answer">
+          <div class="answer-label">✦ Réponse</div>
+          <pre data-lang="CSS"><code><span class="sel">article.post.featured</span> <span class="kw">{</span>
+  <span class="cmt">/* L'article avec les deux classes post ET featured */</span>
+<span class="kw">}</span>
+
+<span class="cmt">/* Ou plus court : */</span>
+<span class="sel">.featured</span> <span class="kw">{ }</span></code></pre>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-label">Question 4</div>
+        <p>Sélectionnez le premier paragraphe de chaque article</p>
+        <div class="answer">
+          <div class="answer-label">✦ Réponse</div>
+          <pre data-lang="CSS"><code><span class="sel">article.post p:first-of-type</span> <span class="kw">{</span>
+  <span class="cmt">/* Premier &lt;p&gt; dans chaque article */</span>
+<span class="kw">}</span>
+
+<span class="cmt">/* Ou : */</span>
+<span class="sel">article.post p:first-child</span> <span class="kw">{</span>
+  <span class="cmt">/* Si le &lt;p&gt; est le premier enfant direct */</span>
+<span class="kw">}</span></code></pre>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-label">Question 5</div>
+        <p>Sélectionnez les éléments <code>&lt;li&gt;</code> pairs</p>
+        <div class="answer">
+          <div class="answer-label">✦ Réponse</div>
+          <pre data-lang="CSS"><code><span class="sel">.main-nav ul li:nth-child(even)</span> <span class="kw">{</span>
+  <span class="cmt">/* 2ème, 4ème, 6ème... éléments &lt;li&gt; */</span>
+<span class="kw">}</span>
+
+<span class="cmt">/* Équivalent avec 2n : */</span>
+<span class="sel">.main-nav ul li:nth-child(2n)</span> <span class="kw">{ }</span></code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">1.2 Spécificité</div>
+
+      <div class="question">
+        <div class="question-label">Question 1</div>
+        <p>Classez ces sélecteurs par spécificité croissante : <code>p</code>, <code>.text</code>, <code>#main</code>, <code>p.text</code>, <code>#main .text p</code></p>
+        <div class="answer">
+          <div class="answer-label">✦ Réponse — Ordre croissant</div>
+          <table class="spec-table">
+            <thead>
+              <tr>
+                <th>Rang</th>
+                <th>Sélecteur</th>
+                <th>Score (id, class, tag)</th>
+                <th>Valeur</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1 (le plus faible)</td>
+                <td class="sel-col">p</td>
+                <td>(0, 0, 1)</td>
+                <td class="score-col">001</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td class="sel-col">.text</td>
+                <td>(0, 1, 0)</td>
+                <td class="score-col">010</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td class="sel-col">p.text</td>
+                <td>(0, 1, 1)</td>
+                <td class="score-col">011</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td class="sel-col">#main</td>
+                <td>(1, 0, 0)</td>
+                <td class="score-col">100</td>
+              </tr>
+              <tr>
+                <td>5 (le plus fort)</td>
+                <td class="sel-col">#main .text p</td>
+                <td>(1, 1, 1)</td>
+                <td class="score-col">111</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="margin-top:12px;font-size:13px;color:var(--text-muted);">Règle de calcul : <strong>ID</strong> = 100 pts · <strong>Classe/pseudo-classe/attribut</strong> = 10 pts · <strong>Tag/pseudo-élément</strong> = 1 pt</p>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-label">Question 2</div>
+        <p>Si deux règles ont la même spécificité, laquelle gagne ?</p>
+        <div class="answer">
+          <div class="answer-label">✦ Réponse</div>
+          <p>C'est la <strong>règle déclarée en dernier</strong> dans le CSS qui gagne (principe de la cascade — ordre d'apparition). La dernière règle écrase les précédentes à spécificité égale.</p>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-label">Question 3</div>
+        <p>Pourquoi faut-il éviter <code>!important</code> ?</p>
+        <div class="answer">
+          <div class="answer-label">✦ Réponse</div>
+          <ul>
+            <li>Il <strong>court-circuite la cascade</strong> et rend le CSS imprévisible.</li>
+            <li>Il crée une <strong>guerre des !important</strong> : pour surcharger un <code>!important</code>, il faut en écrire un autre, ce qui devient incontrôlable.</li>
+            <li>Il <strong>nuit à la maintenabilité</strong> : difficile de comprendre pourquoi un style est appliqué.</li>
+            <li>Alternative : mieux structurer les sélecteurs et la spécificité dès le départ.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== EXERCICE 2 ===================== -->
+  <section id="ex2" class="exercise ex-2">
+    <div class="exercise-header">
+      <div class="ex-number">02</div>
+      <h2>Box Model</h2>
+      <span class="duration">⏱ 25 min</span>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">2.1 Comprendre le Box Model</div>
+
+      <div class="question">
+        <div class="question-label">Question 1</div>
+        <p>Avec <code>box-sizing: content-box</code> (défaut), quelle est la largeur totale visible de <code>.box</code> ?</p>
+        <div class="answer">
+          <div class="answer-label">✦ Réponse</div>
+          <div class="calc-box">
+            <div class="line"><span class="label">width (contenu)</span><span class="value">300px</span></div>
+            <div class="line"><span class="label">padding gauche + droite (20×2)</span><span class="value">+ 40px</span></div>
+            <div class="line"><span class="label">border gauche + droite (5×2)</span><span class="value">+ 10px</span></div>
+            <div class="line"><span class="label total">Largeur totale visible</span><span class="value total">= 350px</span></div>
+          </div>
+          <p style="margin-top:8px;font-size:13px;color:var(--text-muted);">Note : le <code>margin</code> (15px) n'est pas inclus dans la largeur visible, il crée l'espace autour.</p>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-label">Question 2</div>
+        <p>Avec <code>box-sizing: border-box</code>, quelle est la largeur totale visible ?</p>
+        <div class="answer">
+          <div class="answer-label">✦ Réponse</div>
+          <div class="calc-box">
+            <div class="line"><span class="label">width (inclut padding + border)</span><span class="value">300px</span></div>
+            <div class="line"><span class="label total">Largeur totale visible</span><span class="value total">= 300px</span></div>
+          </div>
+          <p style="margin-top:8px;font-size:13px;color:var(--text-muted);">Avec <code>border-box</code>, la <code>width</code> englobe le padding et la border. Le contenu interne sera réduit à 300 - 40 - 10 = <strong>250px</strong>.</p>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="question-label">Question 3</div>
+        <p>Écrivez le reset CSS universel pour <code>box-sizing</code></p>
+        <div class="answer">
+          <div class="answer-label">✦ Réponse</div>
+          <pre data-lang="CSS"><code><span class="sel">*</span>,
+<span class="sel">*::before</span>,
+<span class="sel">*::after</span> <span class="kw">{</span>
+  <span class="prop">box-sizing</span>: <span class="val">border-box</span>;
+<span class="kw">}</span></code></pre>
+          <p>Le <code>::before</code> et <code>::after</code> sont inclus pour couvrir tous les pseudo-éléments générés.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">2.2 Centrer un élément</div>
+
+      <div class="question">
+        <div class="question-label">Centrage horizontal + vertical</div>
+        <div class="answer">
+          <div class="answer-label">✦ Réponse</div>
+          <pre data-lang="CSS"><code><span class="cmt">/* ─── Centrage horizontal seulement ─── */</span>
+<span class="sel">.box</span> <span class="kw">{</span>
+  <span class="prop">width</span>: <span class="num">600px</span>;
+  <span class="prop">margin</span>: <span class="num">0</span> <span class="val">auto</span>; <span class="cmt">/* auto gauche+droite */</span>
+<span class="kw">}</span>
+
+<span class="cmt">/* ─── Centrage horizontal + vertical (Flexbox) ─── */</span>
+<span class="sel">body</span> <span class="kw">{</span>
+  <span class="prop">min-height</span>: <span class="num">100vh</span>;
+  <span class="prop">display</span>: <span class="val">flex</span>;
+  <span class="prop">justify-content</span>: <span class="val">center</span>; <span class="cmt">/* horizontal */</span>
+  <span class="prop">align-items</span>: <span class="val">center</span>;    <span class="cmt">/* vertical */</span>
+<span class="kw">}</span>
+
+<span class="cmt">/* ─── Alternative : Grid ─── */</span>
+<span class="sel">body</span> <span class="kw">{</span>
+  <span class="prop">min-height</span>: <span class="num">100vh</span>;
+  <span class="prop">display</span>: <span class="val">grid</span>;
+  <span class="prop">place-items</span>: <span class="val">center</span>;
+<span class="kw">}</span></code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== EXERCICE 3 ===================== -->
+  <section id="ex3" class="exercise ex-3">
+    <div class="exercise-header">
+      <div class="ex-number">03</div>
+      <h2>Flexbox</h2>
+      <span class="duration">⏱ 30 min</span>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">3.1 Barre de navigation</div>
+
+      <div class="question">
+        <div class="question-label">Code CSS + Résultat</div>
+        <div class="answer">
+          <div class="answer-label">✦ Réponse</div>
+          <pre data-lang="CSS"><code><span class="sel">.navbar</span> <span class="kw">{</span>
+  <span class="prop">display</span>: <span class="val">flex</span>;
+  <span class="prop">justify-content</span>: <span class="val">space-between</span>; <span class="cmt">/* logo à gauche, liens à droite */</span>
+  <span class="prop">align-items</span>: <span class="val">center</span>;
+  <span class="prop">padding</span>: <span class="num">14px 24px</span>;
+  <span class="prop">background</span>: <span class="val">#1e293b</span>;
+<span class="kw">}</span>
+
+<span class="sel">.nav-links</span> <span class="kw">{</span>
+  <span class="prop">list-style</span>: <span class="val">none</span>;
+  <span class="prop">display</span>: <span class="val">flex</span>;
+  <span class="prop">gap</span>: <span class="num">24px</span>;
+  <span class="prop">margin</span>: <span class="num">0</span>; <span class="prop">padding</span>: <span class="num">0</span>;
+<span class="kw">}</span>
+
+<span class="sel">.nav-links a</span> <span class="kw">{</span>
+  <span class="prop">color</span>: <span class="val">#94a3b8</span>;
+  <span class="prop">text-decoration</span>: <span class="val">none</span>;
+  <span class="prop">transition</span>: <span class="val">color .2s</span>;
+<span class="kw">}</span>
+
+<span class="sel">.nav-links a:hover</span> <span class="kw">{</span>
+  <span class="prop">color</span>: <span class="val">#fff</span>;
+<span class="kw">}</span></code></pre>
+        </div>
+        <div class="demo">
+          <div class="demo-label">◆ Aperçu rendu</div>
+          <nav class="demo-navbar">
+            <div class="logo">MonSite</div>
+            <ul>
+              <li><a href="#">Accueil</a></li>
+              <li><a href="#">Services</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">3.2 Cartes de même hauteur</div>
+
+      <div class="question">
+        <div class="question-label">Code CSS + Résultat</div>
+        <div class="answer">
+          <div class="answer-label">✦ Réponse</div>
+          <pre data-lang="CSS"><code><span class="sel">.cards</span> <span class="kw">{</span>
+  <span class="prop">display</span>: <span class="val">flex</span>;
+  <span class="prop">gap</span>: <span class="num">16px</span>;
+  <span class="prop">align-items</span>: <span class="val">stretch</span>; <span class="cmt">/* hauteur égale par défaut */</span>
+<span class="kw">}</span>
+
+<span class="sel">.card</span> <span class="kw">{</span>
+  <span class="prop">flex</span>: <span class="num">1</span>;              <span class="cmt">/* toutes les cartes ont la même largeur */</span>
+  <span class="prop">display</span>: <span class="val">flex</span>;
+  <span class="prop">flex-direction</span>: <span class="val">column</span>;
+  <span class="prop">padding</span>: <span class="num">20px</span>;
+  <span class="prop">background</span>: <span class="val">#1e293b</span>;
+  <span class="prop">border-radius</span>: <span class="num">10px</span>;
+<span class="kw">}</span>
+
+<span class="sel">.card p</span> <span class="kw">{</span>
+  <span class="prop">flex</span>: <span class="num">1</span>; <span class="cmt">/* pousse le bouton vers le bas */</span>
+<span class="kw">}</span>
+
+<span class="sel">.card-link</span> <span class="kw">{</span>
+  <span class="prop">margin-top</span>: <span class="val">auto</span>; <span class="cmt">/* ou utiliser flex: 1 sur le paragraphe */</span>
+  <span class="prop">display</span>: <span class="val">block</span>;
+  <span class="prop">text-align</span>: <span class="val">center</span>;
+  <span class="prop">padding</span>: <span class="num">8px 16px</span>;
+  <span class="prop">background</span>: <span class="val">#6ee7b7</span>;
+  <span class="prop">color</span>: <span class="val">#000</span>;
+  <span class="prop">border-radius</span>: <span class="num">6px</span>;
+  <span class="prop">text-decoration</span>: <span class="val">none</span>;
+  <span class="prop">font-weight</span>: <span class="val">700</span>;
+<span class="kw">}</span></code></pre>
+        </div>
+        <div class="demo">
+          <div class="demo-label">◆ Aperçu rendu</div>
+          <div class="demo-cards">
+            <div class="demo-card">
+              <h3>Carte 1</h3>
+              <p>Contenu court.</p>
+              <a href="#" class="card-link">En savoir plus</a>
+            </div>
+            <div class="demo-card">
+              <h3>Carte 2</h3>
+              <p>Contenu beaucoup plus long pour tester l'alignement vertical des boutons dans la carte.</p>
+              <a href="#" class="card-link">En savoir plus</a>
+            </div>
+            <div class="demo-card">
+              <h3>Carte 3</h3>
+              <p>Contenu moyen pour cette carte.</p>
+              <a href="#" class="card-link">En savoir plus</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== EXERCICE 4 ===================== -->
+  <section id="ex4" class="exercise ex-4">
+    <div class="exercise-header">
+      <div class="ex-number">04</div>
+      <h2>CSS Grid</h2>
+      <span class="duration">⏱ 30 min</span>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">4.1 Grille de cartes responsive</div>
+
+      <div class="question">
+        <div class="question-label">Code CSS + Résultat</div>
+        <div class="answer">
+          <div class="answer-label">✦ Réponse</div>
+          <pre data-lang="CSS"><code><span class="sel">.grid-cards</span> <span class="kw">{</span>
+  <span class="prop">display</span>: <span class="val">grid</span>;
+  <span class="prop">grid-template-columns</span>: <span class="val">repeat</span>(<span class="val">auto-fit</span>, <span class="val">minmax</span>(<span class="num">200px</span>, <span class="num">1fr</span>));
+  <span class="prop">gap</span>: <span class="num">16px</span>;
+<span class="kw">}</span>
+
+<span class="cmt">/*
+  auto-fit  → crée autant de colonnes que possible
+  minmax    → chaque colonne fait min 200px, max 1fr
+  Résultat  → s'adapte automatiquement à la fenêtre
+*/</span>
+
+<span class="sel">.grid-cards .card</span> <span class="kw">{</span>
+  <span class="prop">background</span>: <span class="val">#1e293b</span>;
+  <span class="prop">border-radius</span>: <span class="num">8px</span>;
+  <span class="prop">padding</span>: <span class="num">24px</span>;
+  <span class="prop">text-align</span>: <span class="val">center</span>;
+<span class="kw">}</span></code></pre>
+        </div>
+        <div class="demo">
+          <div class="demo-label">◆ Aperçu rendu</div>
+          <div class="demo-grid">
+            <div class="card">Carte 1</div>
+            <div class="card">Carte 2</div>
+            <div class="card">Carte 3</div>
+            <div class="card">Carte 4</div>
+            <div class="card">Carte 5</div>
+            <div class="card">Carte 6</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">4.2 Layout complet avec Grid Areas</div>
+
+      <div class="question">
+        <div class="question-label">Code CSS + Résultat</div>
+        <div class="answer">
+          <div class="answer-label">✦ Réponse</div>
+          <pre data-lang="CSS"><code><span class="sel">.page-layout</span> <span class="kw">{</span>
+  <span class="prop">display</span>: <span class="val">grid</span>;
+  <span class="prop">grid-template-areas</span>:
+    <span class="str">"header  header"</span>
+    <span class="str">"sidebar main  "</span>
+    <span class="str">"footer  footer"</span>;
+  <span class="prop">grid-template-columns</span>: <span class="num">220px</span> <span class="num">1fr</span>;
+  <span class="prop">grid-template-rows</span>: <span class="val">auto</span> <span class="num">1fr</span> <span class="val">auto</span>;
+  <span class="prop">min-height</span>: <span class="num">100vh</span>;
+  <span class="prop">gap</span>: <span class="num">8px</span>;
+<span class="kw">}</span>
+
+<span class="sel">.header</span>  <span class="kw">{</span> <span class="prop">grid-area</span>: <span class="val">header</span>;  <span class="kw">}</span>
+<span class="sel">.sidebar</span> <span class="kw">{</span> <span class="prop">grid-area</span>: <span class="val">sidebar</span>; <span class="kw">}</span>
+<span class="sel">.main</span>    <span class="kw">{</span> <span class="prop">grid-area</span>: <span class="val">main</span>;    <span class="kw">}</span>
+<span class="sel">.footer</span>  <span class="kw">{</span> <span class="prop">grid-area</span>: <span class="val">footer</span>;  <span class="kw">}</span></code></pre>
+        </div>
+        <div class="demo">
+          <div class="demo-label">◆ Aperçu rendu</div>
+          <div class="demo-layout">
+            <div class="d-header">Header</div>
+            <div class="d-sidebar">Sidebar</div>
+            <div class="d-main">Contenu principal</div>
+            <div class="d-footer">Footer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== EXERCICE 5 ===================== -->
+  <section id="ex5" class="exercise ex-5">
+    <div class="exercise-header">
+      <div class="ex-number">05</div>
+      <h2>Responsive Design — Mobile First</h2>
+      <span class="duration">⏱ 25 min</span>
+    </div>
+
+    <div class="question">
+      <div class="question-label">Media Queries Mobile First</div>
+      <div class="answer">
+        <div class="answer-label">✦ Réponse complète</div>
+        <pre data-lang="CSS"><code><span class="cmt">/* ═══ BASE : Mobile (0px → 767px) ═══ */</span>
+<span class="sel">.container</span> <span class="kw">{</span>
+  <span class="prop">width</span>: <span class="num">100%</span>;
+  <span class="prop">padding</span>: <span class="num">15px</span>;
+<span class="kw">}</span>
+
+<span class="sel">.nav-menu</span> <span class="kw">{</span>
+  <span class="prop">display</span>: <span class="val">flex</span>;
+  <span class="prop">flex-direction</span>: <span class="val">column</span>; <span class="cmt">/* liens empilés sur mobile */</span>
+  <span class="prop">gap</span>: <span class="num">5px</span>;
+<span class="kw">}</span>
+
+<span class="sel">.content</span> <span class="kw">{</span>
+  <span class="prop">display</span>: <span class="val">block</span>; <span class="cmt">/* une seule colonne */</span>
+<span class="kw">}</span>
+
+<span class="sel">.sidebar</span> <span class="kw">{</span>
+  <span class="prop">display</span>: <span class="val">none</span>; <span class="cmt">/* masquée sur mobile */</span>
+<span class="kw">}</span>
+
+<span class="cmt">/* ═══ TABLETTE : min-width 768px ═══ */</span>
+<span class="kw">@media</span> (<span class="prop">min-width</span>: <span class="num">768px</span>) <span class="kw">{</span>
+
+  <span class="sel">.container</span> <span class="kw">{</span>
+    <span class="prop">max-width</span>: <span class="num">768px</span>;
+    <span class="prop">margin</span>: <span class="num">0</span> <span class="val">auto</span>;
+    <span class="prop">padding</span>: <span class="num">20px</span>;
+  <span class="kw">}</span>
+
+  <span class="sel">.nav-menu</span> <span class="kw">{</span>
+    <span class="prop">flex-direction</span>: <span class="val">row</span>; <span class="cmt">/* liens horizontaux */</span>
+    <span class="prop">gap</span>: <span class="num">16px</span>;
+  <span class="kw">}</span>
+
+  <span class="sel">.content</span> <span class="kw">{</span>
+    <span class="prop">display</span>: <span class="val">grid</span>;
+    <span class="prop">grid-template-columns</span>: <span class="num">1fr 1fr</span>; <span class="cmt">/* 2 colonnes sur tablette */</span>
+    <span class="prop">gap</span>: <span class="num">20px</span>;
+  <span class="kw">}</span>
+
+  <span class="sel">.sidebar</span> <span class="kw">{</span>
+    <span class="prop">display</span>: <span class="val">block</span>; <span class="cmt">/* réapparaît */</span>
+  <span class="kw">}</span>
+<span class="kw">}</span>
+
+<span class="cmt">/* ═══ DESKTOP : min-width 1024px ═══ */</span>
+<span class="kw">@media</span> (<span class="prop">min-width</span>: <span class="num">1024px</span>) <span class="kw">{</span>
+
+  <span class="sel">.container</span> <span class="kw">{</span>
+    <span class="prop">max-width</span>: <span class="num">1200px</span>;
+    <span class="prop">padding</span>: <span class="num">40px</span>;
+  <span class="kw">}</span>
+
+  <span class="sel">.content</span> <span class="kw">{</span>
+    <span class="prop">grid-template-columns</span>: <span class="num">240px</span> <span class="num">1fr</span>; <span class="cmt">/* sidebar + main */</span>
+  <span class="kw">}</span>
+<span class="kw">}</span></code></pre>
+        <p style="margin-top:12px;">L'approche <strong>Mobile First</strong> utilise toujours <code>min-width</code> pour les breakpoints : on part des styles de base (mobile), puis on enrichit pour les écrans plus grands.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== EXERCICE 6 ===================== -->
+  <section id="ex6" class="exercise ex-6">
+    <div class="exercise-header">
+      <div class="ex-number">06</div>
+      <h2>Variables CSS et Thèmes</h2>
+      <span class="duration">⏱ 20 min</span>
+    </div>
+
+    <div class="question">
+      <div class="question-label">Système de couleurs clair / sombre</div>
+      <div class="answer">
+        <div class="answer-label">✦ Réponse</div>
+        <pre data-lang="CSS"><code><span class="cmt">/* ═══ Thème clair (défaut) ═══ */</span>
+<span class="sel">:root</span> <span class="kw">{</span>
+  <span class="prop">--color-bg</span>:        <span class="val">#f8fafc</span>;
+  <span class="prop">--color-surface</span>:   <span class="val">#ffffff</span>;
+  <span class="prop">--color-text</span>:      <span class="val">#0f172a</span>;
+  <span class="prop">--color-text-muted</span>:<span class="val">#64748b</span>;
+  <span class="prop">--color-primary</span>:   <span class="val">#3b82f6</span>;
+  <span class="prop">--color-border</span>:    <span class="val">#e2e8f0</span>;
+  <span class="prop">--radius</span>:          <span class="num">8px</span>;
+  <span class="prop">--shadow</span>:          <span class="val">0 2px 8px rgba(0,0,0,.08)</span>;
+<span class="kw">}</span>
+
+<span class="cmt">/* ═══ Thème sombre ═══ */</span>
+<span class="kw">@media</span> (<span class="prop">prefers-color-scheme</span>: <span class="val">dark</span>) <span class="kw">{</span>
+  <span class="sel">:root</span> <span class="kw">{</span>
+    <span class="prop">--color-bg</span>:        <span class="val">#0f172a</span>;
+    <span class="prop">--color-surface</span>:   <span class="val">#1e293b</span>;
+    <span class="prop">--color-text</span>:      <span class="val">#e2e8f0</span>;
+    <span class="prop">--color-text-muted</span>:<span class="val">#94a3b8</span>;
+    <span class="prop">--color-primary</span>:   <span class="val">#60a5fa</span>;
+    <span class="prop">--color-border</span>:    <span class="val">#334155</span>;
+    <span class="prop">--shadow</span>:          <span class="val">0 2px 8px rgba(0,0,0,.3)</span>;
+  <span class="kw">}</span>
+<span class="kw">}</span>
+
+<span class="cmt">/* ═══ Bascule manuelle via data-theme ═══ */</span>
+<span class="sel">[data-theme="dark"]</span> <span class="kw">{</span>
+  <span class="prop">--color-bg</span>:      <span class="val">#0f172a</span>;
+  <span class="prop">--color-surface</span>: <span class="val">#1e293b</span>;
+  <span class="cmt">/* … même valeurs … */</span>
+<span class="kw">}</span>
+
+<span class="cmt">/* ═══ Utilisation des variables ═══ */</span>
+<span class="sel">body</span> <span class="kw">{</span>
+  <span class="prop">background</span>: <span class="val">var(--color-bg)</span>;
+  <span class="prop">color</span>:      <span class="val">var(--color-text)</span>;
+<span class="kw">}</span>
+
+<span class="sel">.card</span> <span class="kw">{</span>
+  <span class="prop">background</span>:    <span class="val">var(--color-surface)</span>;
+  <span class="prop">border</span>:        <span class="val">1px solid var(--color-border)</span>;
+  <span class="prop">border-radius</span>: <span class="val">var(--radius)</span>;
+  <span class="prop">box-shadow</span>:    <span class="val">var(--shadow)</span>;
+<span class="kw">}</span>
+
+<span class="sel">.btn-primary</span> <span class="kw">{</span>
+  <span class="prop">background</span>: <span class="val">var(--color-primary)</span>;
+  <span class="prop">color</span>:      <span class="val">#fff</span>;
+<span class="kw">}</span></code></pre>
+      </div>
+      <div class="demo">
+        <div class="demo-label">◆ Aperçu : Thème clair vs sombre</div>
+        <div class="theme-demo">
+          <div class="theme-light">
+            <strong>☀ Thème Clair</strong>
+            <div class="theme-card">
+              <div>Surface card</div>
+              <div class="theme-btn">Bouton primary</div>
+            </div>
+          </div>
+          <div class="theme-dark">
+            <strong>🌙 Thème Sombre</strong>
+            <div class="theme-card">
+              <div>Surface card</div>
+              <div class="theme-btn">Bouton primary</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== EXERCICE 7 ===================== -->
+  <section id="ex7" class="exercise ex-7">
+    <div class="exercise-header">
+      <div class="ex-number">07</div>
+      <h2>Transitions et Animations</h2>
+      <span class="duration">⏱ 20 min</span>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">7.1 Bouton animé</div>
+      <div class="question">
+        <div class="question-label">Code CSS + Résultat interactif</div>
+        <div class="answer">
+          <div class="answer-label">✦ Réponse</div>
+          <pre data-lang="CSS"><code><span class="sel">.btn</span> <span class="kw">{</span>
+  <span class="prop">padding</span>:         <span class="num">14px 32px</span>;
+  <span class="prop">border</span>:          <span class="val">2px solid #6ee7b7</span>;
+  <span class="prop">background</span>:      <span class="val">transparent</span>;
+  <span class="prop">color</span>:           <span class="val">#6ee7b7</span>;
+  <span class="prop">border-radius</span>:   <span class="num">8px</span>;
+  <span class="prop">cursor</span>:          <span class="val">pointer</span>;
+  <span class="prop">font-weight</span>:     <span class="val">700</span>;
+
+  <span class="cmt">/* Transition sur plusieurs propriétés */</span>
+  <span class="prop">transition</span>:
+    <span class="val">background .3s ease</span>,
+    <span class="val">color .3s ease</span>,
+    <span class="val">transform .2s ease</span>,
+    <span class="val">box-shadow .3s ease</span>;
+<span class="kw">}</span>
+
+<span class="sel">.btn:hover</span> <span class="kw">{</span>
+  <span class="prop">background</span>:  <span class="val">#6ee7b7</span>;
+  <span class="prop">color</span>:       <span class="val">#000</span>;
+  <span class="prop">transform</span>:   <span class="val">translateY(-3px)</span>;
+  <span class="prop">box-shadow</span>:  <span class="val">0 12px 30px rgba(110,231,183,.35)</span>;
+<span class="kw">}</span>
+
+<span class="sel">.btn:active</span> <span class="kw">{</span>
+  <span class="prop">transform</span>:   <span class="val">translateY(0)</span>;
+  <span class="prop">box-shadow</span>:  <span class="val">none</span>;
+<span class="kw">}</span></code></pre>
+        </div>
+        <div class="demo" style="display:flex;align-items:center;justify-content:center;min-height:100px;">
+          <button class="demo-btn">Survolez-moi ✦</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">7.2 Animation de chargement (Spinner)</div>
+      <div class="question">
+        <div class="question-label">Code CSS + Résultat animé</div>
+        <div class="answer">
+          <div class="answer-label">✦ Réponse</div>
+          <pre data-lang="CSS"><code><span class="cmt">/* ─── Spinner classique ─── */</span>
+<span class="kw">@keyframes</span> <span class="sel">spin</span> <span class="kw">{</span>
+  <span class="val">to</span> <span class="kw">{</span> <span class="prop">transform</span>: <span class="val">rotate(360deg)</span>; <span class="kw">}</span>
+<span class="kw">}</span>
+
+<span class="sel">.spinner</span> <span class="kw">{</span>
+  <span class="prop">width</span>:        <span class="num">48px</span>;
+  <span class="prop">height</span>:       <span class="num">48px</span>;
+  <span class="prop">border</span>:       <span class="val">3px solid rgba(110,231,183,.2)</span>;
+  <span class="prop">border-top</span>:   <span class="val">3px solid #6ee7b7</span>;
+  <span class="prop">border-radius</span>:<span class="num">50%</span>;
+  <span class="prop">animation</span>:   <span class="val">spin 0.8s linear infinite</span>;
+<span class="kw">}</span>
+
+<span class="cmt">/* ─── Pulse ring ─── */</span>
+<span class="kw">@keyframes</span> <span class="sel">pulse-ring</span> <span class="kw">{</span>
+  <span class="val">0%</span>   <span class="kw">{</span> <span class="prop">transform</span>: <span class="val">scale(.8)</span>;  <span class="prop">opacity</span>: <span class="num">1</span>; <span class="kw">}</span>
+  <span class="val">100%</span> <span class="kw">{</span> <span class="prop">transform</span>: <span class="val">scale(1.4)</span>; <span class="prop">opacity</span>: <span class="num">0</span>; <span class="kw">}</span>
+<span class="kw">}</span>
+
+<span class="cmt">/* ─── Dots bounce ─── */</span>
+<span class="kw">@keyframes</span> <span class="sel">dots-bounce</span> <span class="kw">{</span>
+  <span class="val">0%, 80%, 100%</span> <span class="kw">{</span> <span class="prop">transform</span>: <span class="val">scale(0)</span>; <span class="kw">}</span>
+  <span class="val">40%</span>           <span class="kw">{</span> <span class="prop">transform</span>: <span class="val">scale(1)</span>; <span class="kw">}</span>
+<span class="kw">}</span>
+
+<span class="sel">.dots span:nth-child(1)</span> <span class="kw">{</span> <span class="prop">animation-delay</span>: <span class="val">-0.32s</span>; <span class="kw">}</span>
+<span class="sel">.dots span:nth-child(2)</span> <span class="kw">{</span> <span class="prop">animation-delay</span>: <span class="val">-0.16s</span>; <span class="kw">}</span></code></pre>
+        </div>
+        <div class="demo" style="display:flex;align-items:center;justify-content:center;min-height:120px;">
+          <div class="demo-spinner-wrap">
+            <div>
+              <p style="font-size:11px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;text-align:center;margin-bottom:12px;">Spin</p>
+              <div class="spinner"></div>
+            </div>
+            <div>
+              <p style="font-size:11px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;text-align:center;margin-bottom:12px;">Pulse</p>
+              <div class="spinner-ring"></div>
+            </div>
+            <div>
+              <p style="font-size:11px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;text-align:center;margin-bottom:12px;">Dots</p>
+              <div class="spinner-dots">
+                <span></span><span></span><span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== EXERCICE 8 (QUIZ) ===================== -->
+  <section id="ex8" class="exercise ex-8">
+    <div class="exercise-header">
+      <div class="ex-number">08</div>
+      <h2>Quiz de Révision</h2>
+      <span class="duration">⏱ Révision</span>
+    </div>
+
+    <!-- Q1 -->
+    <div class="quiz-item">
+      <div class="quiz-q">1. Quel sélecteur a la spécificité la plus haute ?</div>
+      <div class="quiz-options">
+        <div class="quiz-option incorrect"><div class="icon">✗</div> a) <code>.header .nav a</code> — (0,2,1) = 021</div>
+        <div class="quiz-option correct"><div class="icon">✓</div> b) <code>#header a</code> — (1,0,1) = 101 ← Le plus élevé</div>
+        <div class="quiz-option incorrect"><div class="icon">✗</div> c) <code>header nav a</code> — (0,0,3) = 003</div>
+        <div class="quiz-option incorrect"><div class="icon">✗</div> d) <code>a.active</code> — (0,1,1) = 011</div>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="quiz-item">
+      <div class="quiz-q">2. Avec <code>box-sizing: border-box</code>, un élément avec <code>width: 200px</code> et <code>padding: 20px</code> a une largeur totale de :</div>
+      <div class="quiz-options">
+        <div class="quiz-option incorrect"><div class="icon">✗</div> a) 240px — (serait le cas avec content-box)</div>
+        <div class="quiz-option correct"><div class="icon">✓</div> b) 200px — le padding est inclus dans la width</div>
+        <div class="quiz-option incorrect"><div class="icon">✗</div> c) 220px</div>
+        <div class="quiz-option incorrect"><div class="icon">✗</div> d) 160px</div>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="quiz-item">
+      <div class="quiz-q">3. Pour centrer un élément verticalement et horizontalement avec Flexbox :</div>
+      <div class="quiz-options">
+        <div class="quiz-option incorrect"><div class="icon">✗</div> a) <code>justify-content: center</code> — horizontal seulement</div>
+        <div class="quiz-option incorrect"><div class="icon">✗</div> b) <code>align-items: center</code> — vertical seulement</div>
+        <div class="quiz-option correct"><div class="icon">✓</div> c) <code>justify-content: center</code> ET <code>align-items: center</code> — les deux axes</div>
+        <div class="quiz-option incorrect"><div class="icon">✗</div> d) <code>text-align: center</code> — centre uniquement le texte</div>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="quiz-item">
+      <div class="quiz-q">4. La valeur <code>1fr</code> en CSS Grid signifie :</div>
+      <div class="quiz-options">
+        <div class="quiz-option incorrect"><div class="icon">✗</div> a) 1 pixel</div>
+        <div class="quiz-option correct"><div class="icon">✓</div> b) 1 fraction de l'espace disponible</div>
+        <div class="quiz-option incorrect"><div class="icon">✗</div> c) 1 pourcentage</div>
+        <div class="quiz-option incorrect"><div class="icon">✗</div> d) 1 rem</div>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="quiz-item">
+      <div class="quiz-q">5. L'approche "Mobile First" utilise :</div>
+      <div class="quiz-options">
+        <div class="quiz-option incorrect"><div class="icon">✗</div> a) <code>max-width</code> — approche "Desktop First"</div>
+        <div class="quiz-option correct"><div class="icon">✓</div> b) <code>min-width</code> — on part du mobile, on enrichit pour les grands écrans</div>
+        <div class="quiz-option incorrect"><div class="icon">✗</div> c) <code>device-width</code> — propriété obsolète</div>
+        <div class="quiz-option incorrect"><div class="icon">✗</div> d) <code>orientation</code> — sert à détecter portrait/paysage uniquement</div>
+      </div>
+    </div>
+
+    <!-- Score résumé -->
+    <div style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:12px;padding:24px;text-align:center;margin-top:16px;">
+      <div style="font-size:2rem;font-weight:800;color:var(--correct);font-family:'JetBrains Mono',monospace;">5 / 5</div>
+      <div style="color:var(--text-muted);font-size:14px;margin-top:6px;">Toutes les réponses correctes identifiées ✦</div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  Corrigé réalisé par Claude · TP CSS3 — ENSET Mohammedia ·
+  <a href="https://c4.daaif.net/tp.html" target="_blank">Source du TP</a>
+</footer>
+
+</body>
+</html>
